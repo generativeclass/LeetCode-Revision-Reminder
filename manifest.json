@@ -1,0 +1,17 @@
+{
+    "manifest_version": 3,
+    "name": "LeetCode Revision Reminder",
+    "version": "1.0",
+    "description": "Set reminders to revise LeetCode problems with progress tracking",
+    "permissions": ["storage", "alarms", "notifications"],
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "icons": {
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  }

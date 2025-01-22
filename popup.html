@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>LeetCode Revision Reminder</title>
+  <style>
+    body {
+      width: 380px;
+      padding: 16px;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #2d3748;
+      background: #f8fafc;
+    }
+
+    .progress-banner {
+      padding: 16px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .progress-banner.all-set {
+      background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+      color: white;
+    }
+
+    .progress-banner.pending-revisions {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      color: white;
+    }
+
+    .stats-section {
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 20px 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      border: 1px solid #e2e8f0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 10px;
+      background: #f1f5f9;
+      border-radius: 8px;
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    .problem-input {
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      border: 1px solid #e2e8f0;
+    }
+
+    .input-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      background: #2563eb;
+    }
+
+    .problem-list {
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .problem-item {
+      background: white;
+      padding: 16px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s ease;
+    }
+
+    .problem-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .problem-link {
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .problem-meta {
+      font-size: 13px;
+      color: #64748b;
+      margin: 8px 0;
+    }
+
+    .badge {
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .badge-blue {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .completion-btn {
+      padding: 6px 12px;
+      background: #22c55e;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-right: 8px;
+    }
+
+    .delete-btn {
+      padding: 6px 12px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div id="progressBanner" class="progress-banner">
+    <!-- Progress status will be shown here -->
+  </div>
+
+  <div class="stats-section">
+    <h3>Your Progress</h3>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div id="totalProblems" class="stat-value">0</div>
+        <div class="stat-label">Total Problems</div>
+      </div>
+      <div class="stat-item">
+        <div id="totalRevisions" class="stat-value">0</div>
+        <div class="stat-label">Revisions Done</div>
+      </div>
+      <div class="stat-item">
+        <div id="avgRevisions" class="stat-value">0</div>
+        <div class="stat-label">Avg. Revisions</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="problem-input">
+    <div class="input-group">
+      <input type="number" id="problemId" placeholder="Problem ID">
+      <input type="text" id="problemName" placeholder="Problem Name">
+    </div>
+    <div class="input-group">
+      <input type="number" id="revisionDays" placeholder="Revision Days">
+      <button id="addProblem">Add Problem</button>
+    </div>
+  </div>
+
+  <div id="problemList" class="problem-list">
+    <!-- Problems will be listed here -->
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
